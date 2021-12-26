@@ -58,7 +58,7 @@ Link related issues below. Insert the issue link or reference after the word "Cl
 - Requires #123
 - Superseds #123
 -->
-- 
+-
 
 ## Use cases
 

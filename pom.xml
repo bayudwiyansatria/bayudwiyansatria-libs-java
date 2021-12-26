@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>com.bayudwiyansatria</groupId>
+    <artifactId>maven-parent</artifactId>
+    <version>1.0.1-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <!-- Packages -->
+  <artifactId>bayudwiyansatria-libs</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <!-- Artifact -->
+  <name>Bayu Dwiyan Satria Parent Libs</name>
+  <description>
+    Bayu Dwiyan Satria support for the community of open-source software projects.
+    Desire to create high quality software and library.
+    Involved with the full product lifecycle, from strategic planning through to deployment and
+    maintenance.
+    Consider just a person that sharing resources.
+  </description>
+  <url>https://github.com/bayudwiyansatria/bayudwiyansatria-libs-java</url>
+  <!-- Organization -->
+  <organization>
+    <name>Bayu Dwiyan Satria</name>
+    <url>https://bayudwiyansatria.com</url>
+  </organization>
+  <inceptionYear/>
+  <licenses>
+    <license/>
+  </licenses>
+  <developers>
+    <developer>
+      <id>bayudwiyansatria</id>
+      <name>Bayu Dwiyan Satria</name>
+      <email>bayudwiyansatria@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+        <role>Maintainer</role>
+      </roles>
+      <timezone>Asia/Jakarta</timezone>
+    </developer>
+  </developers>
+  <contributors/>
+  <!-- Mailing List -->
+  <mailingLists>
+    <mailingList/>
+  </mailingLists>
+  <!-- Source Management -->
+  <scm>
+    <connection>scm:git:https://github.com/bayudwiyansatria/bayudwiyansatria-libs-java.git</connection>
+    <developerConnection>scm:git:https://github.com/bayudwiyansatria/bayudwiyansatria-libs-java.git
+    </developerConnection>
+    <url>https://github.com/bayudwiyansatria/bayudwiyansatria-libs-java</url>
+    <tag>HEAD</tag>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>Github Package Registry</name>
+      <url>https://maven.pkg.github.com/bayudwiyansatria/bayudwiyansatria-libs-java</url>
+    </repository>
+  </distributionManagement>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/bayudwiyansatria/bayudwiyansatria-libs-java/issues</url>
+  </issueManagement>
+  <ciManagement>
+    <system>github</system>
+    <url>https:/github.com/bayudwiyansatria/bayudwiyansatria-libs-java/actions</url>
+    <notifiers>
+      <notifier>
+        <type>mail</type>
+        <sendOnError>true</sendOnError>
+        <sendOnFailure>true</sendOnFailure>
+        <sendOnSuccess>true</sendOnSuccess>
+        <sendOnWarning>false</sendOnWarning>
+        <configuration/>
+      </notifier>
+    </notifiers>
+  </ciManagement>
+  <!-- Repository -->
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>github</id>
+      <name>Github Package Registry</name>
+      <url>https://maven.pkg.github.com/bayudwiyansatria/*</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <name>Central Repository</name>
+      <url>https://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+  <!-- Properties -->
+  <properties>
+    <organization.logo>https://bayudwiyansatria.com/assets/bayudwiyansatria.png</organization.logo>
+    <!-- Project Properties -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <project.test.coverage.targetPercentage>70%</project.test.coverage.targetPercentage>
+    <!-- JVM Properties -->
+    <java.version>11</java.version>
+    <java.optimize>true</java.optimize>
+    <!-- Maven Properties -->
+    <maven.version>3.6.3</maven.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <!-- System Properties -->
+    <sourceReleaseAssemblyDescriptor>source-release</sourceReleaseAssemblyDescriptor>
+    <assembly.tarLongFileMode>posix</assembly.tarLongFileMode>
+    <gpg.executable>gpg</gpg.executable>
+    <gpg.useagent>true</gpg.useagent>
+    <arguments/>
+    <!-- Dependencies Properties -->
+    <!-- Plugins Properties -->
+    <!-- Additional Properties -->
+  </properties>
+  <!-- Dependencies -->
+  <dependencyManagement/>
+  <dependencies/>
+  <!-- Builds -->
+  <build>
+    <directory>${project.basedir}/target</directory>
+    <finalName>${project.artifactId}-${project.version}</finalName>
+    <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+    <testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+    <outputDirectory>${project.build.directory}/classes</outputDirectory>
+    <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
+    <extensions/>
+    <pluginManagement/>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <inherited>true</inherited>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <configuration>
+          <gpgArguments>
+            <arg>--pinentry-mode</arg>
+            <arg>loopback</arg>
+          </gpgArguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <configuration>
+          <additionalOptions>
+            <additionalOption>-Xdoclint:none</additionalOption>
+          </additionalOptions>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-remote-resources-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

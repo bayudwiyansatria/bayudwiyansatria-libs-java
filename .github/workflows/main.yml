@@ -1,50 +1,117 @@
-name: Github Action
+name: Main
 on:
-  # Action On
-  pull_request:
-    branches:
-    - master
+  workflow_dispatch:
+    inputs:
+      major-version:
+        description: 'Major Version'
+        required: true
+        default: '1'
+      minor-version:
+        description: 'Minor Version'
+        required: true
+        default: '0'
+      incremental-version:
+        description: 'Incremental Version'
+        required: true
+        default: '0'
+env:
+  tag_name: ${{ github.event.inputs.major-version }}.${{ github.event.inputs.minor-version }}.${{ github.event.inputs.incremental-version }}
+  MAVEN_USERNAME: ${{ github.event.repository.owner.login }}
+  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
 jobs:
-  # Build
   build:
     name: Build
+    runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
-        java-version: [1.7]
-        os: [ubuntu-latest, windows-latest, macos-latest]
-          
-    runs-on: ${{ matrix.os }}
+        java-version: [ 11.0.3 ]
+        operating-system: [ ubuntu-latest ]
     steps:
-      # Installing Matrix OS Dependencies
-      - name: Install dependencies ${{ matrix.os }}
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update
-      - name: Install dependencies ${{ matrix.os }}
-        if: matrix.os == 'windows-latest'
-        run: choco install git
-      - name: Install dependencies ${{ matrix.os }}
-        if: matrix.os == 'macos-latest'
-        run: brew install git
-      # Get Sources
-      - name: Checkout sources control
-        uses: actions/checkout@v1
-      # Setup Environment
-      - name: Setup java version $ {{ matrix.java-version }} 
-        uses: actions/setup-java@v1
-        with:
-          java-version: ${{ matrix.java-version }}
-          java-package: jdk
-          architecture: x64
-      # Runner
-      - name: Running Environment
-        run: |
-          java -version
-  # Deployment
+    - name: Prepare
+      uses: actions/checkout@v2
+    - name: Set Up Java Development Kit
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: adopt
+        cache: maven
+        settings-path: ${{ github.workspace }}
+    - name: Maven clean test package
+      run: >-
+        mvn
+        clean
+        test
+        package
+        --file pom.xml
+        --no-transfer-progress
+        -s ${GITHUB_WORKSPACE}/settings.xml
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: target
+        path: target
+        retention-days: 1
   deploy:
-    name: Deploying
+    name: Deploy
     needs: build
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        java-version: [ 11.0.3 ]
+        operating-system: [ ubuntu-latest ]
     steps:
-      - name: Running Environment
-        run: |
-          java -version
+    - name: Check out the repo
+      uses: actions/checkout@v2
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: target
+        path: target
+    - name: Set Up Java Development Kit
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ matrix.java-version }}
+        distribution: adopt
+        cache: maven
+        settings-path: ${{ github.workspace }}
+    - name: Configure Git user
+      run: |
+        git config user.email "actions@github.com"
+        git config user.name "GitHub Actions"
+    - name: Prepare Deployment
+      run: >-
+        mvn
+        build-helper:parse-version
+        versions:set -DnewVersion=\${{ env.tag_name }}-SNAPSHOT
+        versions:commit
+        --no-transfer-progress
+    - name: Deployment
+      run: >-
+        mvn
+        --batch-mode
+        --no-transfer-progress
+        -s ${GITHUB_WORKSPACE}/settings.xml
+        deploy
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Git
+      run: |
+        git add .
+        git commit -m "Release ${{ env.tag_name }}"
+        git tag ${{ env.tag_name }}
+        git push origin ${{ env.tag_name }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ env.tag_name }}
+        release_name: Release ${{ env.tag_name }}
+        body: |
+          Changes in this Release
+          - First Change
+          - Second Change
+        draft: false
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
