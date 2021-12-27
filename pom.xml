@@ -141,6 +141,7 @@
     <arguments/>
     <!-- Dependencies Properties -->
     <!-- Plugins Properties -->
+    <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
     <!-- Additional Properties -->
   </properties>
   <!-- Dependencies -->
@@ -155,7 +156,29 @@
     <outputDirectory>${project.build.directory}/classes</outputDirectory>
     <testOutputDirectory>${project.build.directory}/test-classes</testOutputDirectory>
     <extensions/>
-    <pluginManagement/>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>${jacoco-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>report</id>
+              <phase>test</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
