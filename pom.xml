@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.bayudwiyansatria</groupId>
     <artifactId>maven-parent</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <!-- Packages -->
@@ -143,9 +143,19 @@
     <!-- Plugins Properties -->
     <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
     <!-- Additional Properties -->
+    <junit.version>4.13.2</junit.version>
   </properties>
   <!-- Dependencies -->
-  <dependencyManagement/>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies/>
   <!-- Builds -->
   <build>
@@ -173,6 +183,13 @@
               <phase>test</phase>
               <goals>
                 <goal>report</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>report-aggregate</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>report-aggregate</goal>
               </goals>
             </execution>
           </executions>
